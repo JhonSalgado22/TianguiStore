@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Productos Tienda</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+  <style>
+    .producto-card {
+      width: 18rem;
+      margin: 10px;
+    }
+    .producto-img {
+      max-height: 200px;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="mt-5">Productos de la Tienda</h1>
+    <div id="productos-container" class="d-flex flex-wrap justify-content-center">
+      <!-- Aquí se mostrarán los productos -->
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $.get("http://localhost:3000/productos", function (data) {
+        data.forEach(producto => {
+          const productoCard = `
+            <div class="card producto-card">
+              <img src="/images/${producto.imagen_url}" class="card-img-top producto-img" alt="${producto.nombre}">
+              <div class="card-body">
+                <h5 class="card-title">${producto.nombre}</h5>
+                <p class="card-text">${producto.descripcion}</p>
+                <p class="card-text"><strong>Precio:</strong> $${producto.precio}</p>
+                <p class="card-text"><strong>Stock:</strong> ${producto.stock}</p>
+                <a href="#" class="btn btn-primary">Agregar al Carrito</a>
+              </div>
+            </div>`;
+          $("#productos-container").append(productoCard);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
